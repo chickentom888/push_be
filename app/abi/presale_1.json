@@ -1,0 +1,1071 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_presaleGenerator",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "baseFeeAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenFeeAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "baseLiquidity",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenLiquidity",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "remainingBaseTokenBalance",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "remainingSaleTokenBalance",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "zeroRoundTokenBurn",
+        "type": "uint256"
+      }
+    ],
+    "name": "AddLiquidity",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "baseTokenAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "saleTokenAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "BuyToken",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "baseTokenAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "UserWithdrawBaseToken",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "saleTokenAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "percent",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "numberClaimed",
+        "type": "uint256"
+      }
+    ],
+    "name": "UserWithdrawSaleToken",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "BUYERS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "baseDeposited",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenBought",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenClaimed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numberClaimed",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PRESALE_LOCK_FORWARDER",
+    "outputs": [
+      {
+        "internalType": "contract IPresaleLockForwarder",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PRESALE_SETTING",
+    "outputs": [
+      {
+        "internalType": "contract IPresaleSetting",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "WrapToken",
+    "outputs": [
+      {
+        "internalType": "contract IWrapToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "addLiquidity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyToken",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_users",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "_add",
+        "type": "bool"
+      }
+    ],
+    "name": "editWhitelist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "forceFailByAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "forceFailIfPairExists",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getBuyerInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "baseDeposited",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenBought",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenClaimed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numberClaimed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "historyTimeClaimed",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "historyAmountClaimed",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getFeeInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "baseFeePercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenFeePercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "baseFeeAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tokenFeeAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getGeneralInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "contractVersion",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "contractType",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "presaleGenerator",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getListBuyerLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getListBuyerLengthAtIndex",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPresaleAddressInfo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "presaleOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "fundAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "saleToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "wrapTokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "dexLockerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "dexFactoryAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPresaleMainInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "limitPerBuyer",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "hardCap",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "softCap",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "liquidityPercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "listingPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lockPeriod",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "presaleInMainToken",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPresaleRound",
+    "outputs": [
+      {
+        "internalType": "int8",
+        "name": "",
+        "type": "int8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPresaleStatus",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getRoundInfo",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "activeZeroRound",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "activeFirstRound",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getStatusInfo",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "whitelistOnly",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "lpGenerationComplete",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "forceFailed",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalBaseCollected",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalTokenSold",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalTokenWithdrawn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalBaseWithdrawn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "firstRoundLength",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numBuyers",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "successAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "liquidityAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "currentStatus",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int8",
+        "name": "currentRound",
+        "type": "int8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserWhitelistStatus",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getVestingInfo",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "activeVesting",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "vestingPeriod",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "vestingPercent",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getWhitelistFlag",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getWhitelistedUserAtIndex",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getWhitelistedUsersLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getZeroRoundInfo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "percent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "finishBeforeFirstRound",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "finishAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxBaseTokenAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxSlot",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "registeredSlot",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getZeroRoundUserAtIndex",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getZeroRoundUserLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ownerWithdrawSaleToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "registerZeroRound",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "userAddress",
+        "type": "address"
+      }
+    ],
+    "name": "retrieveBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "userAddress",
+        "type": "address"
+      }
+    ],
+    "name": "retrieveToken",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_baseToken",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_presaleToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_baseFeePercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenFeePercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address payable",
+        "name": "_baseFeeAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "_tokenFeeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setFeeInfo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address payable",
+        "name": "_presaleOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_limitPerBuyer",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_hardCap",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_softCap",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liquidityPercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_listingPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lockPeriod",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMainInfo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_activeZeroRound",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "_activeFirstRound",
+        "type": "bool"
+      }
+    ],
+    "name": "setRoundInfo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_activeVesting",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_vestingPeriod",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_vestingPercent",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setVestingInfo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_flag",
+        "type": "bool"
+      }
+    ],
+    "name": "setWhitelistFlag",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fundAddress",
+        "type": "address"
+      }
+    ],
+    "name": "updateFundAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_limitPerBuyer",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateLimitPerBuyer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_endTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateTime",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "_vestingPeriod",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_vestingPercent",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "updateVestingInfo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "userWithdrawBaseToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "userWithdrawSaleToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

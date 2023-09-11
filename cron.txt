@@ -1,0 +1,3 @@
+* * * * * php app/bootstrap.cli token minute
+* * * * * php app/bootstrap.cli swap minute
+* * * * * php app/bootstrap.cli staking minute

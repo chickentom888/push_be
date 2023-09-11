@@ -1,0 +1,8 @@
+cache
+.phalcon
+.idea
+vendor
+app/data
+.env
+logs
+/nbproject/private/

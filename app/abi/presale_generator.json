@@ -1,0 +1,153 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "presaleOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "presaleAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "creationFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreatePresale",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "PRESALE_FACTORY",
+    "outputs": [
+      {
+        "internalType": "contract IPresaleFactory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PRESALE_SETTING",
+    "outputs": [
+      {
+        "internalType": "contract IPresaleSetting",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address payable",
+        "name": "_presaleOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_presaleToken",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_baseToken",
+        "type": "address"
+      },
+      {
+        "internalType": "bool[3]",
+        "name": "_activeInfo",
+        "type": "bool[3]"
+      },
+      {
+        "internalType": "uint256[10]",
+        "name": "unitParams",
+        "type": "uint256[10]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_vestingPeriod",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_vestingPercent",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "createPresale",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

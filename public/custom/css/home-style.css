@@ -1,0 +1,119 @@
+.box-image {
+    position: relative;
+}
+
+.box-image .image-cover {
+    padding-top: 56.25%;
+    display: block;
+    position: relative;
+    height: auto;
+    overflow: hidden;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.box-image .image-cover img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-position: 50% 50%;
+    object-fit: cover;
+
+    max-width: 100%;
+    transform: translateZ(0);
+    margin: 0 auto;
+    opacity: 1;
+
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.svg-wrapper {
+    display: inline-block;
+}
+
+.svg-wrapper svg {
+    width: 100%;
+    height: auto;
+}
+
+/*=================================*/
+.bg-header-cruve {
+    background: url(../images/home-bg.jpg) scroll center center/cover;
+    background-color: #fbf8ff
+}
+
+.create-account li:hover a {
+    color: #fdae01;
+}
+
+.footer-area.footer-area-2 {
+    background-image: linear-gradient(0deg, #fa6878 0%, #dc0f23 100%);
+    padding-top: 290px;
+}
+
+.footer-widget.footer-logo svg {
+    width: 50px;
+    height: auto;
+}
+
+.social-links.social-links-2 li {
+    background-color: #fdae01;
+    overflow: hidden;
+}
+
+.footer-widget .form-control {
+    background-color: #fff !important;
+    border-color: #fdae01 !important;
+    color: #000 !important;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #000;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #000;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #000;
+}
+
+a.gradient-btn-2.hvr-shutter-out-horizontal::before, input[type='submit'].gradient-btn-2.hvr-shutter-out-horizontal::before, button.gradient-btn-2.hvr-shutter-out-horizontal::before {
+    background: linear-gradient(to right, #ffaab2 0%, #e84353 0%, #dc0f23 100%);
+}
+
+.section-title.section-title-2 h2 {
+    color: #dc0f23;
+    text-align: center !important;
+}
+
+.section-title.section-title-2 h2.china-border-image {
+    font-size: 38px;
+    text-align: center;
+    border: 20px solid transparent;
+    border-image: url(../images/china-border-image.png) round;
+    border-image-slice: 5%;
+}
+
+.working-section-2 {
+    background: #fff;
+    position: relative;
+}
+
+/*Report*/
+.report .report-item {
+    margin-bottom: 15px;
+}
+
+.report .report-item .report-content {
+    text-align: center;
+    padding: 15px 0px;
+}

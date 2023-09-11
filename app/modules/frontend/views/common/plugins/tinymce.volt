@@ -1,0 +1,2 @@
+<script src="/custom/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<script>tinymce.init({selector: '.tinymce', height: 350, menubar: !1, toolbar: "bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link"});</script>
