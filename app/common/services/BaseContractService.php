@@ -9,7 +9,6 @@ use Dcore\Library\ContractLibrary;
 use Dcore\Library\Helper;
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
 use Exception;
 use Httpful\Exception\ConnectionErrorException;
 use Httpful\Request;
@@ -502,8 +501,6 @@ class BaseContractService
         $platformId = 'binance-smart-chain';
         if ($tokenInfo['platform'] == BinanceWeb3::PLATFORM) {
             $platformId = 'binance-smart-chain';
-        } else if ($tokenInfo['platform'] == EthereumWeb3::PLATFORM) {
-            $platformId = 'ethereum';
         }
         $baseUrl .= $platformId . "/contract/" . $tokenInfo['address'];
         $response = Request::get($baseUrl)->expectsJson()->send();

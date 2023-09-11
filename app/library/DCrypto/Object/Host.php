@@ -17,15 +17,16 @@ class Host
 	public $cert_file;
 	public $url;
 
-	/**
-	 * CoinHost constructor.
-	 * @param $host
-	 * @param $port
-	 * @param $username
-	 * @param $password
-	 * @param $pass_phrase
-	 * @param $cert_file
-	 */
+    /**
+     * CoinHost constructor.
+     * @param $host
+     * @param $port
+     * @param $username
+     * @param $password
+     * @param null $pass_phrase
+     * @param null $cert_file
+     * @param null $url
+     */
 	public function __construct($host, $port, $username, $password, $pass_phrase = null, $cert_file = null, $url = null)
 	{
 		$this->host = $host;

@@ -58,20 +58,6 @@ class UserController extends ApiControllerBase
             $userConnectCollection = $this->mongo->selectCollection('user_connect');
 
             $id = Helper::isObjectIdMongo($id) ? $id : $this->credential->_id;
-
-            /*if ($id != $this->credential->_id) {
-                $cacheKey = "system_id:direct_system_id_" . $this->credential->_id;
-                $listDirectSystemId = $this->redis->get($cacheKey);
-                if (strlen($listDirectSystemId)) {
-                    $listDirectSystemId = json_decode($listDirectSystemId, true);
-                    if (!in_array($id, $listDirectSystemId)) {
-                        return $this->setDataJson(BaseCollection::STATUS_INACTIVE, [], 'Error');
-                    }
-                } else {
-                    return $this->setDataJson(BaseCollection::STATUS_INACTIVE, [], 'Error');
-                }
-            }*/
-
             $id = new ObjectId($id);
             $conditions = ['inviter_id' => $id];
             $limit = isset($dataGet['limit']) ? intval($dataGet['limit']) : 20;
@@ -115,19 +101,6 @@ class UserController extends ApiControllerBase
 
             $userConnectCollection = $this->mongo->selectCollection('user_connect');
             $id = Helper::isObjectIdMongo($id) ? $id : $this->credential->_id;
-
-            /*if ($id != $this->credential->_id) {
-                $cacheKey = "system_id:tree_system_id_" . $this->credential->_id;
-                $listTreeSystemId = $this->redis->get($cacheKey);
-                if (strlen($listTreeSystemId)) {
-                    $listTreeSystemId = json_decode($listTreeSystemId, true);
-                    if (!in_array($id, $listTreeSystemId)) {
-                        return $this->setDataJson(BaseCollection::STATUS_INACTIVE, [], 'Error');
-                    }
-                } else {
-                    return $this->setDataJson(BaseCollection::STATUS_INACTIVE, [], 'Error');
-                }
-            }*/
 
             $id = new ObjectId($id);
             $conditions = ['_id' => $id];

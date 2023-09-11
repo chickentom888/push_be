@@ -7,7 +7,6 @@ use Brick\Math\RoundingMode;
 use Dcore\Library\Arrays;
 use Dcore\Library\ContractLibrary;
 use Dcore\Library\Helper;
-use DCrypto\Networks\EthereumWeb3;
 use Exception;
 use Httpful\Exception\ConnectionErrorException;
 use Httpful\Request;
@@ -96,9 +95,6 @@ class TokenService extends BaseContractService
                         try {
                             $baseUrl = "https://api.coingecko.com/api/v3/coins/";
                             $platformId = 'binance-smart-chain';
-                            if ($tokenItem['platform'] == EthereumWeb3::PLATFORM) {
-                                $platformId = 'ethereum';
-                            }
                             $baseUrl .= $platformId . "/contract/" . $tokenItem['address'];
                             $ch = curl_init($baseUrl);
                             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);

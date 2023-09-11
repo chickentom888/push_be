@@ -6,8 +6,6 @@ use Dcore\Collections\BaseCollection;
 use Dcore\Library\ContractLibrary;
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
-use DCrypto\Networks\TronWeb3;
 
 class RegistryController extends ExtendedControllerBase
 {
@@ -21,8 +19,6 @@ class RegistryController extends ExtendedControllerBase
     public function indexAction()
     {
         $lsChainScan = [
-            EthereumWeb3::PLATFORM,
-            TronWeb3::PLATFORM,
             BinanceWeb3::PLATFORM,
         ];
         $data = [];

@@ -78,10 +78,6 @@ return new Config([
     'blockchain' => [
         'bsc_rpc_main_net' => $_ENV['BSC_RPC_MAIN_NET'],
         'bsc_rpc_test_net' => $_ENV['BSC_RPC_TEST_NET'],
-        'polygon_rpc_test_net' => $_ENV['POLYGON_RPC_TEST_NET'],
-        'polygon_rpc_main_net' => $_ENV['POLYGON_RPC_MAIN_NET'],
-        'lottery_operator_address' => $_ENV['LOTTERY_OPERATOR_ADDRESS'],
-        'lottery_operator_private_key' => $_ENV['LOTTERY_OPERATOR_PRIVATE_KEY'],
         'withdraw_address' => $_ENV['WITHDRAW_ADDRESS'],
         'withdraw_private_key' => $_ENV['WITHDRAW_PRIVATE_KEY'],
         'support_liquid_address' => $_ENV['SUPPORT_LIQUID_ADDRESS'],
@@ -97,62 +93,12 @@ return new Config([
         'authorize' => $_ENV['REDIS_AUTHORIZE'],
         'prefix' => $_ENV['REDIS_PREFIX'],
     ],
-    'media' => [
-        'private_dir' => APP_PATH . "/data/",
-        'public_dir' => BASE_PATH . "/public/",
-        'thumb' => BASE_PATH . "/public/thumbs/",
-    ],
-    'mailer' => [
-        'host' => '',
-        'port' => 587,
-        'username' => '',
-        'password' => '',
-        'secure' => 'tls',
-        'from_title' => '',
-        'from_email' => '',
-        "error_receive" => "",
-        "template" => [
-            "register" => "Welcome",
-            "forgot" => "Password Reset Request",
-        ]
-    ],
-    "google" => [
-        "recaptcha" => [
-            "key" => "",
-            "secret" => "",
-        ],
-        "authen" => [
-            'title' => "",
-        ],
-    ],
+
     "telegram" => [
         "token" => $_ENV['TELEGRAM_TOKEN'],
         "monitor_token" => $_ENV['TELEGRAM_MONITOR_TOKEN'],
         "main_channel" => $_ENV['TELEGRAM_MAIN_CHANNEL'],
         "monitor_channel" => $_ENV['TELEGRAM_MONITOR_CHANNEL'],
-    ],
-    "wallet" => [
-        "eth" => [
-            'name' => "Ethereum",
-            "chain" => ["ERC20"],
-            "icon" => "mdi mdi-ethereum text-primary"
-        ],
-        "usdt" => [
-            'name' => "Tether (ERC20)",
-            "chain" => [
-                "ERC20",
-                "TRC20",
-            ],
-            "icon" => "cc USDT"
-        ],
-        "usdt_trc20" => [
-            'name' => "Tether (TRC20)",
-            "chain" => [
-                "ERC20",
-                "TRC20",
-            ],
-            "icon" => "cc USDT"
-        ],
     ],
     'swap' => [
         'base_url' => $_ENV['SWAP_API_URL'],

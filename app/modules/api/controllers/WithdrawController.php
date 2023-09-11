@@ -98,9 +98,6 @@ class WithdrawController extends ApiControllerBase
             if ($this->request->isPost()) {
                 $userConnect = $this->getUserInfo();
                 $userAddress = $userConnect['address'];
-                if ($this->isLimitRequest($userAddress)) {
-                    return $this->setDataJson(BaseCollection::STATUS_INACTIVE, null, 'Slow down');
-                }
 
                 global $config;
                 $registryCollection = $this->mongo->selectCollection('registry');
@@ -158,35 +155,11 @@ class WithdrawController extends ApiControllerBase
                     'blockchain_status' => BaseCollection::STATUS_PENDING
                 ];
                 $withdrawCollection->insertOne($withdrawData);
-
-                $autoWithdrawAmount = doubleval($registry['auto_withdraw_amount']);
-
-                // <editor-fold desc = "Send Message Telegram">
-                $message = 'New withdrawal' . PHP_EOL;
-                $message .= "User id: {$userConnect['_id']}" . PHP_EOL;
-                $message .= "Address: {$userConnect['address']}" . PHP_EOL;
-                $message .= "Amount: " . Helper::numberFormat($amount) . PHP_EOL;
-                $message .= "Prev balance: " . Helper::numberFormat($balance, 2) . PHP_EOL;
-                if ($autoWithdrawAmount <= 0) {
-                    $message .= "Auto amount not set" . PHP_EOL;
-                    $message .= "Approved at: " . date('d/m/Y H:i:s') . PHP_EOL;
-                } else {
-                    $message .= "Auto amount: " . Helper::numberFormat($autoWithdrawAmount) . PHP_EOL;
-                    if ($autoWithdrawAmount > $amount) {
-                        $message .= "Approved at: " . date('d/m/Y H:i:s', strtotime('+2 minutes')) . PHP_EOL;
-                    } else {
-                        $message .= "Need checked" . PHP_EOL;
-                    }
-                }
-                Helper::sendTelegramMsg($message);
-                // </editor-fold>
-
                 return $this->setDataJson(BaseCollection::STATUS_ACTIVE, null, 'Success');
 
             }
         } catch (Exception $exception) {
             return $this->setDataJson(BaseCollection::STATUS_INACTIVE, null, 'Something went wrong');
-//            return $this->setDataJson(BaseCollection::STATUS_INACTIVE, null, $exception->getMessage());
         }
     }
 }

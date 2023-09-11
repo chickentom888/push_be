@@ -9,7 +9,6 @@ use Dcore\Library\ContractLibrary;
 use Dcore\Library\Helper;
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
 use Exception;
 use Httpful\Exception\ConnectionErrorException;
 use Httpful\Request;
@@ -19,7 +18,7 @@ use Web3\Contract;
 class TokenController extends ApiControllerBase
 {
 
-    /** @var BinanceWeb3|EthereumWeb3 */
+    /** @var BinanceWeb3 */
     public $web3;
 
     public function initialize($param = null)
@@ -581,9 +580,6 @@ class TokenController extends ApiControllerBase
     {
         $baseUrl = "https://api.coingecko.com/api/v3/coins/";
         $platformId = 'binance-smart-chain';
-        if ($token['platform'] == EthereumWeb3::PLATFORM) {
-            $platformId = 'ethereum';
-        }
         $baseUrl .= $platformId . "/contract/" . $token['address'];
         $response = Request::get($baseUrl)->expectsJson()->send();
         if ($response->hasBody()) {

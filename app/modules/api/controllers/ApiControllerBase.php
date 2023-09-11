@@ -3,8 +3,6 @@
 namespace Dcore\Modules\Api\Controllers;
 
 use Dcore\Library\Helper;
-use Dcore\Library\Mailer;
-use Dcore\Models\Users;
 use Exception;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
@@ -12,7 +10,6 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;
 use MongoDB\BSON\ObjectId;
 use Phalcon\Escaper;
-use Phalcon\Mvc\View;
 use Redis;
 use UnexpectedValueException;
 
@@ -144,21 +141,7 @@ class ApiControllerBase extends ExtendedControllerBase
             'index/registry',
             'index/mainToken',
             'index/totalValueLock',
-            'presale/detail',
-            'presale/getList',
-            'presale/listPurchased',
-            'presale/getUserLog',
-            'presale/getBuyLog',
-            'presale/listUserRegisterZeroRound',
-            'presale/whitelistAddress',
-            'presale/checkValidWhitelist',
-            'lottery/getList',
-            'lottery/detail',
-            'lottery/detailLatest',
-            'lottery/getLatestLotteryFinished',
-            'lotteryTicket/getWinTicketOfLatestLotteryFinished',
-            'lotteryTicket/getTopBuyerLastRound',
-            'lottery/summary',
+
         ];
         if (in_array($fullCA, $whiteListCA)) {
             return true;
@@ -194,12 +177,6 @@ class ApiControllerBase extends ExtendedControllerBase
         header("Access-Control-Max-Age: 1000");
         header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
         header("Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE");
-    }
-
-    public function showDebug()
-    {
-        ini_set("display_errors", 1);
-        error_reporting(E_ALL);
     }
 
     public function createJWTToken($data)
@@ -248,102 +225,6 @@ class ApiControllerBase extends ExtendedControllerBase
         } catch (SignatureInvalidException|UnexpectedValueException|BeforeValidException|Exception $e) {
 //            throw new Exception($e->getMessage());
             throw new Exception($this->_("Invalid authenticate."));
-        }
-    }
-
-    /**
-     * @param Users $user
-     * @return array
-     */
-    public function genUserInfoResponse(Users $user): array
-    {
-        $inviter = $user->Inviter;
-        $inviterName = "---";
-        if (!empty($inviter)) $inviterName = $inviter->getNameDisplay();
-        return [
-            "id" => $user->id,
-            "username" => $user->username,
-            "unique_code" => $user->unique_code,
-            "email" => $user->email,
-            "phone" => $user->phone,
-            "avatar" => $user->getAvatarUrl(),
-            "fullname" => $user->fullname,
-            "display_name" => $user->getNameDisplay(),
-            "sponsor_name" => $inviterName,
-            "dob" => $user->dob > 0 ? date("d-m-Y", $user->dob) : null,
-            "gender" => $user->gender,
-            "enabled_twofa" => $user->enabled_twofa,
-            "role" => $user->role,
-            'address' => $user->address,
-            'eth_address' => $user->getAddressByCoin('eth'),
-            'eth_balance' => $user->eth_balance,
-            'usdt_address' => $user->getAddressByCoin('usdt'),
-            'usdt_balance' => $user->usdt_balance,
-            'usdt_trc20_address' => $user->getAddressByCoin('usdt_trc20'),
-            'coin_address' => $user->getAddressByCoin('coin'),
-            'coin_balance' => number_format($user->coin_balance, 4),
-            'ico_balance' => number_format($user->ico_balance, 4),
-            'fake_view' => 0,
-        ];
-    }
-
-    public function sendMailByTemplate($to, $subject, $template, $data, $optional = [])
-    {
-        $bufferedContent = $this->renderTemplate('email', $template, $data);
-        Mailer::send($to, $subject, $bufferedContent, $optional);
-    }
-
-    public function renderTemplate($controller, $action, $data = null)
-    {
-        $view = $this->view;
-        $content = $view->getRender($controller, $action, $data, function ($view) {
-            $view->setRenderLevel(View::LEVEL_LAYOUT);
-        });
-        return $content;
-    }
-
-    public function getFileUploads($key = null)
-    {
-        $config = $this->config;
-        try {
-            if ($this->request->hasFiles() == true) {
-                $pathUpload = $config->media->public_dir;
-                $filePath = "uploads/" . date("Y/m/d/");
-                $fullPath = $pathUpload . $filePath;
-                if (!file_exists($fullPath)) {
-                    mkdir($fullPath, 0777, true);
-                }
-                $uploads = $this->request->getUploadedFiles();
-                $data = [];
-                foreach ($uploads as $upload) {
-                    $filename = md5(uniqid(rand(), true)) . '-' . strtolower($upload->getname());
-                    $path = $fullPath . $filename;
-                    if ($upload->moveTo($path)) {
-                        if (in_array(strtolower($upload->getType()), ['jpg', 'jpeg', 'png'])) {
-                            if (@is_array(getimagesize($path))) {
-                                $image = true;
-                            } else {
-                                $image = false;
-                            }
-                            if (!$image) {
-                                unlink($path);
-                            } else {
-                                $image = new ImageResize($path);
-                                if ($image->getSourceWidth() > 600) {
-                                    $image->resizeToWidth(600);
-                                    $image->save($path);
-                                }
-                            }
-                        }
-                        $data[] = $filePath . $filename;
-                    }
-                }
-                return !empty($key) ? $data[0] : $data;
-            } else {
-                return null;
-            }
-        } catch (Exception $e) {
-            return null;
         }
     }
 

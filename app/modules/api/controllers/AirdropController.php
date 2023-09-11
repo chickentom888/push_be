@@ -6,7 +6,6 @@ use Dcore\Collections\BaseCollection;
 use Dcore\Library\Helper;
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
 use Exception;
 use Httpful\Exception\ConnectionErrorException;
 use MongoDB\BSON\ObjectId;
@@ -14,7 +13,7 @@ use MongoDB\BSON\ObjectId;
 class AirdropController extends ApiControllerBase
 {
 
-    /** @var BinanceWeb3|EthereumWeb3 */
+    /** @var BinanceWeb3 */
     public $web3;
 
     public function initialize($param = null)

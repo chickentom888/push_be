@@ -5,13 +5,12 @@ namespace Dcore\Modules\Api\Controllers;
 use Dcore\Collections\BaseCollection;
 use Dcore\Library\ContractLibrary;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
 use Exception;
 
 class RegistryController extends ApiControllerBase
 {
 
-    /** @var BinanceWeb3|EthereumWeb3 */
+    /** @var BinanceWeb3 */
     public $web3;
 
     public function initialize($param = null)

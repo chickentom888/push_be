@@ -4,7 +4,6 @@ namespace Dcore\Library;
 
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -54,16 +53,8 @@ class ContractLibrary
 
     // PRESALE
     const FUNCTION_CREATE_PRESALE = 'createPresale';
-    const FUNCTION_GET_ZERO_ROUND_INFO = 'getZeroRoundInfo';
-    const FUNCTION_GET_ROUND_INFO = 'getRoundInfo';
-    const FUNCTION_GET_VESTING_INFO = 'getVestingInfo';
-    const FUNCTION_GET_FEE_INFO = 'getFeeInfo';
-    const FUNCTION_GET_GENERAL_INFO = 'getGeneralInfo';
-    const FUNCTION_GET_PRESALE_ADDRESS_INFO = 'getPresaleAddressInfo';
-    const FUNCTION_GET_PRESALE_MAIN_INFO = 'getPresaleMainInfo';
     const FUNCTION_GET_STATUS_INFO = 'getStatusInfo';
     const FUNCTION_BUY_TOKEN = 'buyToken';
-    const FUNCTION_GET_BUYER_INFO = 'getBuyerInfo';
     const FUNCTION_ADD_LIQUIDITY = 'addLiquidity';
     const FUNCTION_USER_WITHDRAW_SALE_TOKEN = 'userWithdrawSaleToken';
     const FUNCTION_USER_FORCE_FAIL = 'forceFailIfPairExists';
@@ -76,51 +67,19 @@ class ContractLibrary
     const FUNCTION_SET_WHITELIST_FLAG = 'setWhitelistFlag';
     const FUNCTION_EDIT_WHITELIST = 'editWhitelist';
     const FUNCTION_REGISTER_ZERO_ROUND = 'registerZeroRound';
-    const FUNCTION_UPDATE_BASE_TOKEN = 'updateBaseToken';
-    const FUNCTION_SET_ZERO_ROUND = 'setZeroRound';
-    const FUNCTION_SET_AUCTION_ROUND = 'setAuctionRound';
-    const FUNCTION_UPDATE_WHITELIST_TOKEN = 'updateWhitelistToken';
     const FUNCTION_CREATE_TOKEN = 'createToken';
-    const FUNCTION_GET_PAIR = 'getPair';
 
     // Sale
     const FUNCTION_CREATE_SALE = 'createSale';
-    const FUNCTION_GET_SALE_ADDRESS_INFO = 'getSaleAddressInfo';
-    const FUNCTION_GET_SALE_MAIN_INFO = 'getSaleMainInfo';
     const FUNCTION_ACTIVE_CLAIM = 'activeClaim';
-
-    // Sale Setting
-    const FUNCTION_SALE_GET_SETTING_ADDRESS = 'getSettingAddress';
-    const FUNCTION_SALE_GET_ZERO_ROUND = 'getZeroRound';
-    const FUNCTION_SALE_WHITE_LIST_TOKEN_LENGTH = 'whitelistTokenLength';
-    const FUNCTION_SALE_GET_WHITE_LIST_TOKEN_AT_INDEX = 'getWhitelistTokenAtIndex';
-    const FUNCTION_SALE_GET_LIST_BASE_TOKEN_LENGTH = 'getListBaseTokenLength';
-    const FUNCTION_SALE_GET_BASE_TOKEN_AT_INDEX = 'getBaseTokenAtIndex';
 
     //Pool
     const FUNCTION_CREATE_POOL = 'createPool';
-    const FUNCTION_GET_POOL_ADDRESS_INFO = 'getPoolAddressInfo';
-    const FUNCTION_GET_POOL_MAIN_INFO = 'getPoolMainInfo';
-    const FUNCTION_GET_WHITELIST_FLAG = 'getWhitelistFlag';
-    const FUNCTION_GET_WHITELISTED_USER_LENGTH = 'getWhitelistedUsersLength';
-    const FUNCTION_GET_AUCTION_ROUND_INFO = 'getAuctionRoundInfo';
-    const FUNCTION_GET_AUCTION_USER_ROUND_INFO = 'getAuctionUserInfo';
     const FUNCTION_USER_WITHDRAW_POOL_TOKEN = 'userWithdrawPoolToken';
     const FUNCTION_USER_WITHDRAW_AUCTION_TOKEN = 'userWithdrawAuctionToken';
     const FUNCTION_OWNER_WITHDRAW_BASE_TOKEN = 'ownerWithdrawBaseToken';
     const FUNCTION_OWNER_WITHDRAW_POOL_TOKEN = 'ownerWithdrawPoolToken';
     const FUNCTION_REGISTER_AUCTION_ROUND = 'registerAuctionRound';
-
-    // Pool Setting
-    const FUNCTION_POOL_GET_SETTING_ADDRESS = 'getSettingAddress';
-    const FUNCTION_POOL_GET_ZERO_ROUND = 'getZeroRound';
-    const FUNCTION_POOL_WHITE_LIST_TOKEN_LENGTH = 'whitelistTokenLength';
-    const FUNCTION_POOL_GET_WHITE_LIST_TOKEN_AT_INDEX = 'getWhitelistTokenAtIndex';
-    const FUNCTION_POOL_GET_LIST_BASE_TOKEN_LENGTH = 'getListBaseTokenLength';
-    const FUNCTION_POOL_GET_BASE_TOKEN_AT_INDEX = 'getBaseTokenAtIndex';
-    const FUNCTION_POOL_GET_AUCTION_ROUND = 'getAuctionRound';
-    const FUNCTION_POOL_GET_LIST_CREATOR_ADDRESS_LENGTH = 'getListCreatorAddressLength';
-    const FUNCTION_POOL_GET_CREATOR_ADDRESS_AT_INDEX = 'getCreatorAddressAtIndex';
 
     // LOCK
     const FUNCTION_LOCK_TOKEN = 'lockToken';
@@ -153,19 +112,7 @@ class ContractLibrary
     const FUNCTION_BUY_TICKETS = 'buyTickets';
     const FUNCTION_CLOSE_LOTTERY = 'closeLottery';
     const FUNCTION_CALCULATE_REWARD = 'calculateReward';
-    const FUNCTION_MAX_LENGTH_LOTTERY = 'MAX_LENGTH_LOTTERY';
-    const FUNCTION_MIN_LENGTH_LOTTERY = 'MIN_LENGTH_LOTTERY';
-    const FUNCTION_MAX_TREASURY_FEE = 'MAX_TREASURY_FEE';
-    const FUNCTION_INJECTOR_ADDRESS = 'injectorAddress';
-    const FUNCTION_MAX_NUMBER_TICKETS_PER_BUY_OR_CLAIM = 'maxNumberTicketsPerBuyOrClaim';
-    const FUNCTION_PAYMENT_TOKEN = 'paymentToken';
-    const FUNCTION_MAX_PRICE_TICKET = 'maxPriceTicket';
-    const FUNCTION_MIN_PRICE_TICKET = 'minPriceTicket';
     const FUNCTION_OPERATOR_ADDRESS = 'operatorAddress';
-    const FUNCTION_RANDOM_GENERATOR = 'randomGenerator';
-    const FUNCTION_TREASURY_ADDRESS = 'treasuryAddress';
-    const FUNCTION_VIEW_LOTTERY = 'viewLottery';
-    const FUNCTION_GET_REWARD_INFO = 'getRewardInfo';
     const FUNCTION_CLAIM_TICKETS = 'claimTickets';
     const FUNCTION_INJECT_FUNDS = 'injectFunds';
     const FUNCTION_CHANGE_RANDOM_GENERATOR = 'changeRandomGenerator';
@@ -191,19 +138,11 @@ class ContractLibrary
     const INACTIVE = 0;
     const BASE_TOKEN = 'base_token';
     const WHITELIST_TOKEN = 'whitelist_token';
-    const ZERO_ROUND_TOKEN = 'zero_round_token';
-    const AUCTION_ROUND_TOKEN = 'auction_round_token';
 
     const PRESALE_STATUS_FAILED = 3;
     const PRESALE_STATUS_SUCCESS = 2;
     const PRESALE_STATUS_ACTIVE = 1;
     const PRESALE_STATUS_PENDING = 0;
-    const PRESALE_ACTIVE_VESTING = true;
-    const PRESALE_INACTIVE_VESTING = false;
-    const SALE_ACTIVE_VESTING = true;
-    const SALE_INACTIVE_VESTING = false;
-    const POOL_ACTIVE_VESTING = true;
-    const POOL_ACTIVE_CLAIM = true;
 
     const MAX_CURRENT_ROUND = 10;
 
@@ -213,7 +152,6 @@ class ContractLibrary
 
     const MAX_NUMBER_VESTING = 15;
 
-    const PROJECT_TYPE_PRESALE = 'presale';
     const PROJECT_TYPE_SALE = 'sale';
     const PROJECT_TYPE_POOL = 'pool';
 
@@ -223,23 +161,14 @@ class ContractLibrary
     const SALE_TYPE_IDOV = 'idov';
 
     const LISTEN = 1;
-    const LOCKED = 1;
-    const JOINED = 1;
 
     const RPUB_PRESALE_CHANGE = 'RPUB_PRESALE_CHANGE';
     const RPUB_LOTTERY_CHANGE = 'RPUB_LOTTERY_CHANGE';
-    const POOL_BURNING_ROUND = 10;
     const AWAITING_START = -1;
 
-    const LOTTERY_STATUS_PENDING = 0;
-    const LOTTERY_STATUS_OPEN = 1;
-    const LOTTERY_STATUS_CLOSE = 2;
-    const LOTTERY_STATUS_CLAIMABLE = 3;
 
     const LOTTERY_CRON_STATUS_PENDING = 0;
     const LOTTERY_CRON_STATUS_ACTIVE = 1;
-    const LOTTERY_CRON_STATUS_SUCCESS = 2;
-    const LOTTERY_CRON_STATUS_FAIL = 3;
 
     const TRANSACTION_STATUS_PENDING = 0;
     const TRANSACTION_STATUS_SUCCESS = 1;
@@ -285,13 +214,6 @@ class ContractLibrary
         return doubleval($dataPrice->lastPrice);
     }
 
-    public static function getPriceETH()
-    {
-        $dataPrice = Helper::curlGetFileContents("https://www.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT");
-        $dataPrice = json_decode($dataPrice);
-        return doubleval($dataPrice->lastPrice);
-    }
-
     public static function getConfigAddress($platform, $network, $type)
     {
         /** @var Database $mongo */
@@ -307,29 +229,6 @@ class ContractLibrary
             return '';
         }
         return $address['address'];
-    }
-
-    /**
-     * @param $platform
-     * @param $network
-     * @param $address
-     * @return string
-     */
-    public static function getContractTypeByAddress($platform, $network, $address)
-    {
-        /** @var Database $mongo */
-        $mongo = DI::getDefault()->get('mongo');
-        $configAddressCollection = $mongo->selectCollection('config_address');
-        $condition = [
-            'platform' => $platform,
-            'network' => $network,
-            'address' => $address
-        ];
-        $address = $configAddressCollection->findOne($condition);
-        if (!$address || !isset($address['type'])) {
-            return '';
-        }
-        return $address['type'];
     }
 
     public static function getAddressByType($platform = null, $network = null, $type = self::MINT_TOKEN_FACTORY)
@@ -384,8 +283,6 @@ class ContractLibrary
         $price = 0;
         if ($platform == BinanceWeb3::PLATFORM) {
             $price = self::getPriceBNB();
-        } else if ($platform == EthereumWeb3::PLATFORM) {
-            $price = self::getPriceETH();
         }
         return $price;
     }
@@ -406,52 +303,7 @@ class ContractLibrary
             self::DEX_WRAP_TOKEN => 'DEX WRAP TOKEN',
             self::LOCK_CONTRACT => 'LOCK CONTRACT',
             self::LOCK_SETTING => 'LOCK SETTING',
-            self::AIRDROP_SETTING => 'AIRDROP SETTING',
-            self::AIRDROP_CONTRACT => 'AIRDROP CONTRACT',
-            self::MINT_TOKEN_SETTING => 'MINT TOKEN SETTING',
-            self::MINT_TOKEN_FACTORY => 'MINT TOKEN FACTORY',
-            self::MINT_TOKEN_GENERATOR => 'MINT TOKEN GENERATOR',
-            self::PRESALE_SETTING => 'PRESALE SETTING',
-            self::PRESALE_FACTORY => 'PRESALE FACTORY',
-            self::PRESALE_GENERATOR => 'PRESALE GENERATOR',
-            self::SALE_SETTING => 'SALE SETTING',
-            self::SALE_FACTORY => 'SALE FACTORY',
-            self::SALE_GENERATOR => 'SALE GENERATOR',
-            self::POOL_SETTING => 'POOL SETTING',
-            self::POOL_FACTORY => 'POOL FACTORY',
-            self::POOL_GENERATOR => 'POOL GENERATOR',
-            self::LOTTERY => 'LOTTERY',
             self::STAKING => 'STAKING',
-        ];
-    }
-
-    public static function listProjectStatus()
-    {
-        return [
-            ContractLibrary::PRESALE_STATUS_PENDING,
-            ContractLibrary::PRESALE_STATUS_ACTIVE,
-            ContractLibrary::PRESALE_STATUS_SUCCESS,
-            ContractLibrary::PRESALE_STATUS_FAILED,
-        ];
-    }
-
-    public static function listPoolStatus()
-    {
-        return [
-            ContractLibrary::PRESALE_STATUS_PENDING,
-            ContractLibrary::PRESALE_STATUS_ACTIVE,
-            ContractLibrary::PRESALE_STATUS_SUCCESS,
-            ContractLibrary::PRESALE_STATUS_FAILED,
-        ];
-    }
-
-    public static function listLotteryStatus()
-    {
-        return [
-            ContractLibrary::LOTTERY_STATUS_PENDING,
-            ContractLibrary::LOTTERY_STATUS_OPEN,
-            ContractLibrary::LOTTERY_STATUS_CLOSE,
-            ContractLibrary::LOTTERY_STATUS_CLAIMABLE,
         ];
     }
 
@@ -462,27 +314,9 @@ class ContractLibrary
     {
         return [
             ContractLibrary::TOKEN_MINTED => 'Token minted',
-            ContractLibrary::PRESALE_SETTING => 'Presale setting',
-            ContractLibrary::PRESALE_GENERATOR => 'Presale generator',
-            ContractLibrary::PRESALE_FACTORY => 'Presale factory',
-            ContractLibrary::PRESALE => 'Presale',
-            ContractLibrary::MINT_TOKEN_SETTING => 'Mint token setting',
-            ContractLibrary::MINT_TOKEN_GENERATOR => 'Mint token generator',
-            ContractLibrary::MINT_TOKEN_FACTORY => 'Mint token factory',
-            ContractLibrary::AIRDROP_SETTING => 'Airdrop setting',
-            ContractLibrary::AIRDROP_CONTRACT => 'Airdrop contract',
             ContractLibrary::DEX_FACTORY => 'Dex factory',
             ContractLibrary::LOCK_CONTRACT => 'Lock Contract',
             ContractLibrary::LOCK_SETTING => 'Lock Setting',
-            ContractLibrary::SALE_SETTING => 'Sale Setting',
-            ContractLibrary::SALE_GENERATOR => 'Sale Generator',
-            ContractLibrary::SALE_FACTORY => 'Sale Factory',
-            ContractLibrary::SALE => 'Sale',
-            ContractLibrary::POOL_SETTING => 'Pool Setting',
-            ContractLibrary::POOL_GENERATOR => 'Pool Generator',
-            ContractLibrary::POOL_FACTORY => 'Pool Factory',
-            ContractLibrary::POOL => 'Pool',
-            ContractLibrary::LOTTERY => 'Lottery',
             ContractLibrary::STAKING => 'Staking',
         ];
     }

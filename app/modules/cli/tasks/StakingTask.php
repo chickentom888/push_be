@@ -989,52 +989,9 @@ class StakingTask extends TaskBase
         if ($priceBNB > 0) {
             $dataUpdate['bnb_rate'] = $priceBNB;
         }
-        $priceETH = ContractLibrary::getPriceETH();
-        if ($priceETH > 0) {
-            $dataUpdate['eth_rate'] = $priceETH;
-        }
 
         if (count($dataUpdate)) {
             $registryCollection->findOneAndUpdate(['_id' => $registry['_id']], ['$set' => $dataUpdate], ['upsert' => true]);
-        }
-    }
-
-    /**
-     * @throws RedisException
-     */
-    public function calculateTreeAction()
-    {
-        $userConnectCollection = $this->mongo->selectCollection('user_connect');
-        $listUser = $userConnectCollection->find();
-        !empty($listUser) && $listUser = $listUser->toArray();
-        $listUserBranch = [];
-        foreach ($listUser as $user) {
-            $userId = strval($user['_id']);
-            $parent = Users::getParent($userId);
-            while ($parent) {
-                $parentId = strval($parent['_id']);
-                if (!isset($listUserBranch[$parentId])) {
-                    $listUserBranch[$parentId] = [
-                        'direct_system_id' => [],
-                        'tree_system_id' => [],
-                    ];
-                }
-
-                $listUserBranch[$parentId]['tree_system_id'][] = $userId;
-
-                // Nếu Inviter ID == Parent ID thì user là F1
-                if ($user['inviter_id'] == $parent['_id']) {
-                    $inviterId = strval($user['inviter_id']);
-                    $listUserBranch[$inviterId]['direct_system_id'][] = $userId;
-                }
-
-                $parent = Users::getParent($parentId);
-                unset($inviterId);
-            }
-        }
-        foreach ($listUserBranch as $userId => $item) {
-            $this->redis->set("system_id:direct_system_id_{$userId}", json_encode($item['direct_system_id']));
-            $this->redis->set("system_id:tree_system_id_{$userId}", json_encode($item['tree_system_id']));
         }
     }
 

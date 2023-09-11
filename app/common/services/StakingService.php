@@ -216,15 +216,6 @@ class StakingService extends BaseContractService
         $this->updateTransaction($transaction, $dataDecode);
         // </editor-fold>
 
-        // <editor-fold desc="Notify Telegram">
-        $message = "New staking" . PHP_EOL;
-        $message .= "Address: $userAddress" . PHP_EOL;
-        $message .= "Amount: " . Helper::numberFormat($tokenAmount) . PHP_EOL;
-        $message .= "Payment: " . $stakingToken['token_symbol'] . PHP_EOL;
-        $message .= "USD: " . Helper::numberFormat($usdAmount) . PHP_EOL;
-        Helper::sendTelegramMsg($message);
-        // </editor-fold>
-
         if ($isUpdateTree) {
             Users::calcTree();
         }
@@ -433,15 +424,6 @@ class StakingService extends BaseContractService
 
         // <editor-fold desc = "Update Transaction">
         $this->updateTransaction($transaction, $dataDecode);
-        // </editor-fold>
-
-        // <editor-fold desc="Notify Telegram">
-        $message = "New staking" . PHP_EOL;
-        $message .= "Address: $userAddress" . PHP_EOL;
-        $message .= "Amount: " . Helper::numberFormat($stakingTokenAmount) . PHP_EOL;
-        $message .= "Payment: " . $swapToken['token_symbol'] . PHP_EOL;
-        $message .= "USD: " . Helper::numberFormat($swapTokenAmount) . PHP_EOL;
-        Helper::sendTelegramMsg($message);
         // </editor-fold>
 
         if ($isUpdateTree) {

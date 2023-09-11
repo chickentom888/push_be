@@ -3,12 +3,10 @@
 namespace Dcore\Modules\Frontend\Controllers;
 
 use Dcore\Library\ContractLibrary;
-use Dcore\Library\ExcelHelper;
 use Dcore\Library\Helper;
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
 use Exception;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 class LockController extends ExtendedControllerBase
 {
@@ -71,12 +69,6 @@ class LockController extends ExtendedControllerBase
             $conditions['hash'] = $dataGet['hash'];
         }
 
-        if ($dataGet['export']) {
-            $listData = $collection->find($conditions, ['sort' => ['_id' => -1]]);
-            !empty($listData) && $listData = $listData->toArray();
-            $this->exportExcel($listData);
-        }
-
         $limit = 20;
         $p = $dataGet['p'] ?? 1;
         if ($p <= 1) $p = 1;
@@ -96,75 +88,12 @@ class LockController extends ExtendedControllerBase
             'listNetwork', 'listContractType', 'listWithdrawnStatus', 'withdrawnStatus', 'notWithdrawnStatus'));
     }
 
-    protected function exportExcel($listData)
-    {
-        $tokenCollection = $this->mongo->selectCollection('tokens');
-        $fileName = 'Lock_' . date("Ymd_his") .'.xlsx';
-
-        $title = 'Report Lock';
-        $headerColumn = ['Hash', 'Time', 'Unlock Time', 'Platform', 'Network', 'Address lock',
-            'Address withdraw', 'Real token amount', 'Base fee', 'Token fee amount', 'Token Name', 'Token symbol'];
-        $columnHeader = 1;
-        $rowHeader = 2;
-        $dataRow = 3;
-
-        $maxColumn = Coordinate::stringFromColumnIndex(count($headerColumn));
-        $spreadsheet = ExcelHelper::initAndSetStyleHeader($maxColumn, $title);
-        $sheet = $spreadsheet->getActiveSheet();
-
-        foreach ($headerColumn as $headerValue) {
-            $sheet->setCellValueByColumnAndRow($columnHeader, $rowHeader, $headerValue);
-            $columnHeader++;
-        }
-
-        $fieldKeys = ['hash', 'created_at', 'unlock_time', 'platform', 'network', 'address_lock',
-            'address_withdraw', 'real_token_amount', 'base_fee_amount', 'token_fee_amount', 'token_name', 'token_symbol'];
-        $listToken = [];
-        foreach ($listData as $element) {
-            $columnField = 1;
-            if (!isset($listToken[$element['token_address']])) {
-                $token = $tokenCollection->findOne(['address' => $element['token_address']]);
-                $listToken[$element['token_address']] = $token;
-            }
-
-            foreach ($fieldKeys as $field) {
-                switch ($field) {
-                    case 'created_at':
-                    case 'unlock_time':
-                        $element[$field] = date('d/m/Y H:i:s', $element[$field]);
-                        break;
-                    case 'token_name':
-                        $element[$field] = $listToken[$element['token_address']]['name'] ?? '';
-                        break;
-                    case 'token_symbol':
-                        $element[$field] = $listToken[$element['token_address']]['symbol'] ?? '';
-                        break;
-
-                }
-                $sheet->setCellValueByColumnAndRow($columnField, $dataRow, $element[$field]);
-                $columnField++;
-            }
-            $dataRow++;
-        }
-        ExcelHelper::sendFileToBrowser($spreadsheet, $fileName);
-        exit();
-    }
-
     /**
      * @return string[]
      */
     protected static function listContractType(): array
     {
         return [
-            ContractLibrary::TOKEN_MINTED => 'Token minted',
-            ContractLibrary::PRESALE_SETTING => 'Presale setting',
-            ContractLibrary::PRESALE_GENERATOR => 'Presale generator',
-            ContractLibrary::PRESALE_FACTORY => 'Presale factory',
-            ContractLibrary::MINT_TOKEN_SETTING => 'Mint token setting',
-            ContractLibrary::MINT_TOKEN_GENERATOR => 'Mint token generator',
-            ContractLibrary::MINT_TOKEN_FACTORY => 'Mint token factory',
-            ContractLibrary::AIRDROP_SETTING => 'Airdrop setting',
-            ContractLibrary::AIRDROP_CONTRACT => 'Airdrop contract',
             ContractLibrary::DEX_FACTORY => 'Dex factory',
         ];
     }

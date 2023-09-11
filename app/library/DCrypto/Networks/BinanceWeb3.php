@@ -27,7 +27,6 @@ class BinanceWeb3 extends ICoin
 {
     const MAIN_CURRENCY = 'bnb';
     const PLATFORM = 'bsc';
-    const DEFAULT_FEE = 0.008;
     const GAS_MAIN_CURRENCY = 150000;
     const GAS_TOKEN = 500000;
 
@@ -404,21 +403,6 @@ class BinanceWeb3 extends ICoin
     }
 
     /**
-     * Check is checksum address
-     * @param $address
-     * @return bool
-     */
-    function isChecksumAddress($address)
-    {
-        if (!strlen($address)) {
-            return false;
-        }
-
-        $utils = $this->rpcConnector->getUtils();
-        return $utils::isAddressChecksum($address);
-    }
-
-    /**
      * Convert to checksum address
      * @param $address
      * @return string
@@ -452,9 +436,7 @@ class BinanceWeb3 extends ICoin
 
             $addressData = [
                 'address' => $this->toCheckSumAddress($addressInstance->get()),
-                'public_key' => $addressInstance->getPublicKey(),
                 'private_key' => $addressInstance->getPrivateKey(),
-                'password' => $password
             ];
 
             $coinAccount = new Account($id, $addressData['address'], $addressData['address'], $password, null, $this->ticker, null, $addressData['private_key']);
@@ -522,7 +504,7 @@ class BinanceWeb3 extends ICoin
     /**
      * Decode Function Input Data
      * Type: lock, token, liquid
-     * @param $inputData
+     * @param $eventData
      * @param string $type
      * @return array
      * @throws Exception
@@ -581,65 +563,6 @@ class BinanceWeb3 extends ICoin
     }
 
     /**
-     * Get Function Item
-     * @param $functionName
-     * @param string $type
-     * @return array
-     * @throws Exception
-     */
-    public function getFunctionItem($functionName, $type)
-    {
-        try {
-            if (!$functionName || !strlen($functionName)) {
-                return [];
-            }
-
-            $abi = ContractLibrary::getAbi($type);
-            $contractInstance = new Contract($this->rpcConnector->getProvider(), $abi);
-            $listFunction = $contractInstance->getFunctions();
-            $data = [];
-            foreach ($listFunction as $functionItem) {
-
-                if ($functionItem['name'] != $functionName) {
-                    continue;
-                }
-                $data = $functionItem;
-            }
-
-            return $data;
-        } catch (Exception $exception) {
-            throw $exception;
-        }
-
-    }
-
-    public function decryptEthData($data)
-    {
-        try {
-            $address = $this->__connector->decrypt_address($data);
-            if ($this->__connector->status != 200) {
-                throw new Exception($this->__connector->error, $this->__connector->status);
-            }
-            return $address;
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    public function createEthData($data)
-    {
-        try {
-            $address = $this->__connector->encrypt_address($data);
-            if ($this->__connector->status != 200) {
-                throw new Exception($this->__connector->error, $this->__connector->status);
-            }
-            return $address;
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
      * Get Gas Price Wei
      * @return int
      * @throws Exception
@@ -656,32 +579,6 @@ class BinanceWeb3 extends ICoin
             return intval($gasPrice);
         } catch (Exception $e) {
             throw $e;
-        }
-    }
-
-    public function mbchexdec($hex)
-    {
-        if (!strlen($hex)) {
-            return 0;
-        }
-        if (strlen($hex) == 1) {
-            return hexdec($hex);
-        } else {
-            $remain = substr($hex, 0, -1);
-            $last = substr($hex, -1);
-            return bcadd(bcmul(16, $this->mbchexdec($remain)), hexdec($last));
-        }
-    }
-
-    public function mbcdechex($dec)
-    {
-        $last = bcmod($dec, 16);
-        $remain = bcdiv(bcsub($dec, $last), 16);
-
-        if ($remain == 0) {
-            return dechex($last);
-        } else {
-            return $this->mbcdechex($remain) . dechex($last);
         }
     }
 
@@ -727,12 +624,6 @@ class BinanceWeb3 extends ICoin
         return bcdiv($wei, $divisor, $decimal);
     }
 
-    public static function eth2wei($eth, $scale = 18)
-    {
-        $number = pow(10, $scale);
-        return bcmul($eth, $number, $scale);
-    }
-
     public static function bchexdec($hex)
     {
         try {
@@ -776,21 +667,5 @@ class BinanceWeb3 extends ICoin
         }
 
         return $hex;
-    }
-
-    public static function Hex2Str($hex)
-    {
-        $str = "";
-        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $str .= chr(hexdec($hex[$i] . $hex[$i + 1]));
-        }
-
-        return $str;
-
-    }
-
-    public function getGasLimit()
-    {
-        return self::GAS_TOKEN;
     }
 }

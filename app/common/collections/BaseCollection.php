@@ -13,7 +13,6 @@ class BaseCollection extends Collection
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
-    const STATUS_UN_CONFIRMED = 3;
 
     const ROLE_ADMIN = 1;
     const ROLE_MEMBER = 0;
@@ -56,27 +55,6 @@ class BaseCollection extends Collection
         self::TYPE_STAKING_INTEREST,
         self::TYPE_STAKING_FUND_INTEREST,
     ];
-
-    const LIST_ACTION = [
-        self::ACTION_SUPPORT_LIQUID,
-        self::ACTION_WITHDRAW,
-    ];
-
-    public function getNextSequence($name)
-    {
-        $ary = $name::find(
-            [
-                'limit' => 1,
-                'order' => 'id DESC'
-            ]
-        );
-        if (empty($ary->toArray())) $count = 1;
-        else {
-            $count = intval($ary[0]->id);
-            $count++;
-        }
-        return $count;
-    }
 
     public static function listWallet()
     {

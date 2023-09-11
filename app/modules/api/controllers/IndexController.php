@@ -8,8 +8,6 @@ use Dcore\Library\ContractLibrary;
 use Dcore\Library\Helper;
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
-use DCrypto\Networks\PolygonWeb3;
 use Exception;
 use RedisException;
 
@@ -44,25 +42,12 @@ class IndexController extends ApiControllerBase
                 "97" => ContractLibrary::TEST_NETWORK,
             ];
 
-            $polygonChainId = [
-                "131" => ContractLibrary::MAIN_NETWORK,
-                "80001" => ContractLibrary::TEST_NETWORK,
-            ];
-
-            $listChainIdEth = array_keys($ethChainId);
             $listChainIdBsc = array_keys($bscChainId);
-            $listChainIdPolygon = array_keys($polygonChainId);
             $chainId = $dataPost['chain_id'];
 
-            if (in_array($chainId, $listChainIdEth)) {
-                $platform = EthereumWeb3::PLATFORM;
-                $network = $ethChainId[$chainId];
-            } else if (in_array($chainId, $listChainIdBsc)) {
+            if (in_array($chainId, $listChainIdBsc)) {
                 $platform = BinanceWeb3::PLATFORM;
                 $network = $bscChainId[$chainId];
-            } else if (in_array($chainId, $listChainIdPolygon)) {
-                $platform = PolygonWeb3::PLATFORM;
-                $network = $polygonChainId[$chainId];
             } else {
                 $platform = BinanceWeb3::PLATFORM;
                 $network = ContractLibrary::MAIN_NETWORK;
@@ -172,24 +157,7 @@ class IndexController extends ApiControllerBase
                         "chainId" => 56,
                         "icon" => "https://raw.githubusercontent.com/notresponse404/Images/main/bsc.svg",
                     ],
-                    /*[
-                        "name" => "Ethereum",
-                        "symbol" => strtoupper(EthereumWeb3::PLATFORM),
-                        "chainId" => 1,
-                        "icon" => "https://raw.githubusercontent.com/Antexchange/Ant-Launch/main/eth.svg",
-                    ],
-                    [
-                        "name" => "Polygon (Matic)",
-                        "symbol" => strtoupper(PolygonWeb3::PLATFORM),
-                        "chainId" => 137,
-                        "icon" => "https://raw.githubusercontent.com/Antexchange/Ant-Launch/main/matic.svg",
-                    ],
-                    [
-                        "name" => "Fantom",
-                        "symbol" => strtoupper(FantomWeb3::PLATFORM),
-                        "chainId" => 250,
-                        "icon" => "https://raw.githubusercontent.com/Antexchange/Ant-Launch/main/fantom.svg",
-                    ],*/
+
                 ],
                 "test" => [
                     [
@@ -198,18 +166,7 @@ class IndexController extends ApiControllerBase
                         "chainId" => 97,
                         "icon" => "https://raw.githubusercontent.com/notresponse404/Images/main/bsc.svg",
                     ],
-                    /*[
-                        "name" => "Ethereum Ropsten",
-                        "symbol" => strtoupper(EthereumWeb3::PLATFORM),
-                        "chainId" => 3,
-                        "icon" => "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=014",
-                    ],
-                    [
-                        "name" => "Polygon Mumbai",
-                        "symbol" => strtoupper(PolygonWeb3::PLATFORM),
-                        "chainId" => 80001,
-                        "icon" => "https://raw.githubusercontent.com/Antexchange/Ant-Launch/main/matic.svg",
-                    ],*/
+
                 ]
 
             ];
@@ -222,12 +179,6 @@ class IndexController extends ApiControllerBase
                         "chainId" => 56,
                         "icon" => "https://raw.githubusercontent.com/notresponse404/Images/main/bsc.svg",
                     ],
-                    /*[
-                        "name" => "Polygon",
-                        "symbol" => strtoupper(PolygonWeb3::PLATFORM),
-                        "chainId" => 137,
-                        "icon" => "https://raw.githubusercontent.com/Antexchange/Ant-Launch/main/matic.svg",
-                    ],*/
                 ]
             ];
         }
@@ -240,7 +191,7 @@ class IndexController extends ApiControllerBase
     {
         $dataGet = $this->getData;
         $network = $dataGet['network'] == ContractLibrary::TEST_NETWORK ? ContractLibrary::TEST_NETWORK : ContractLibrary::MAIN_NETWORK;
-        $platform = $dataGet['platform'] == EthereumWeb3::PLATFORM ? EthereumWeb3::PLATFORM : BinanceWeb3::PLATFORM;
+        $platform = BinanceWeb3::PLATFORM;
         $cacheKey = "statistic:{$platform}_$network";
         $tokenCache = $this->redis->get($cacheKey);
         if ($tokenCache) {

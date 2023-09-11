@@ -73,22 +73,6 @@ class StakingController extends ExtendedControllerBase
             'sort' => ['_id' => -1]
         ];
         $userPackageCollection = $this->mongo->selectCollection('user_package');
-        if ($dataGet['export']) {
-            $listData = $userPackageCollection->find($conditions, ['sort' => ['_id' => -1]]);
-            !empty($listData) && $listData = $listData->toArray();
-            $fieldKeys = [
-                'hash' => 'Hash',
-                'created_at' => 'Time',
-                'last_claim_interest_timestamp' => 'Last Claim Interest',
-                'last_claim_principal_timestamp' => 'Last Claim Principal',
-                'extend_expire_timestamp' => 'Extend Expire',
-                'platform' => 'Platform',
-                'network' => 'Network',
-                'status' => 'Status',
-            ];
-            $this->exportDataByField($listData, 'Lottery', $fieldKeys);
-        }
-
         $listData = $userPackageCollection->find($conditions, $options);
         !empty($listData) && $listData = $listData->toArray();
         $count = $userPackageCollection->countDocuments($conditions);

@@ -7,12 +7,11 @@ use Dcore\Library\ContractLibrary;
 use Dcore\Library\Helper;
 use DCrypto\Adapter;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
 
 class ConfigAddressController extends ApiControllerBase
 {
 
-    /** @var BinanceWeb3|EthereumWeb3 */
+    /** @var BinanceWeb3 */
     public $web3;
 
     public function initialize($param = null)

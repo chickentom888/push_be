@@ -14,7 +14,6 @@ let platform, network;
 
 // Address of the selected account
 let selectedAccount;
-let divideDecimalBNB = Math.pow(10, 18);
 
 /**
  * Setup the orchestra
@@ -174,18 +173,10 @@ function setPlatformAndNetwork(chainId) {
         network = null;
     } else {
         chainId = chainId.toString();
-        let listKeyEth = Object.keys(ETH_CHAIN_ID);
         let listKeyBsc = Object.keys(BSC_CHAIN_ID);
-        let listKeyPolygon = Object.keys(POLYGON_CHAIN_ID);
-        if (listKeyEth.indexOf(chainId) >= 0) {
-            platform = 'eth';
-            network = ETH_CHAIN_ID[chainId];
-        } else if (listKeyBsc.indexOf(chainId) >= 0) {
+         if (listKeyBsc.indexOf(chainId) >= 0) {
             platform = 'bsc';
             network = BSC_CHAIN_ID[chainId];
-        } else if (listKeyPolygon.indexOf(chainId) >= 0) {
-            platform = 'polygon';
-            network = POLYGON_CHAIN_ID[chainId];
         } else {
             platform = 'bsc';
             network = 'main';
@@ -202,15 +193,6 @@ function setButtonInteract() {
         $('.btn-interact-sc').hide();
     }
 }
-
-let truncate = function (fullStr) {
-    let separator = '...';
-    let frontChars = 4, backChars = 4;
-
-    return fullStr.substr(0, frontChars) +
-        separator +
-        fullStr.substr(fullStr.length - backChars);
-};
 
 async function checkConnect() {
     if (provider == null) {

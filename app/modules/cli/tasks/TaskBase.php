@@ -2,11 +2,7 @@
 
 namespace Dcore\Modules\Cli\Tasks;
 
-use Dcore\Library\Arrays;
-use Dcore\Library\Helper;
 use DCrypto\Networks\BinanceWeb3;
-use DCrypto\Networks\EthereumWeb3;
-use Httpful\Request;
 use MongoDB\Database;
 use Phalcon\Cli\Task;
 use Redis;
@@ -23,7 +19,7 @@ class TaskBase extends Task
     public $notify;
     public $msg;
     public $monitorLabel;
-    /** @var BinanceWeb3|EthereumWeb3 */
+    /** @var BinanceWeb3 */
     public $web3;
 
     public function initialize($param = [])
@@ -45,9 +41,6 @@ class TaskBase extends Task
             $msg = PHP_EOL . PHP_EOL . $this->msg . PHP_EOL . $msg;
         }
         echo $msg;
-        if ($this->notify) {
-            Helper::sendTelegramMsg($msg);
-        }
     }
 
     public function showDebug()
@@ -72,16 +65,6 @@ class TaskBase extends Task
         }
     }
 
-    public function saveFileToLog($message, $fileName)
-    {
-        $dirPath = BASE_PATH . "/logs/" . date("Y_m_d/");
-        if (!file_exists($dirPath)) mkdir($dirPath, 0777, true);
-        $filePath = $dirPath . time() . "_{$fileName}.txt";
-        file_put_contents($filePath, $message);
-        if ($this->notify) {
-            Helper::send_telegram_file($filePath, $fileName);
-        }
-    }
 
     public function getInput($prompt = "Input: ")
     {
@@ -93,24 +76,4 @@ class TaskBase extends Task
         return $text;
     }
 
-    /**
-     * @param $token
-     * @return array
-     * @throws \Httpful\Exception\ConnectionErrorException
-     */
-    protected function getCoinGeckoInfo($token)
-    {
-        $baseUrl = "https://api.coingecko.com/api/v3/coins/";
-        $platformId = 'binance-smart-chain';
-        if ($token['platform'] == EthereumWeb3::PLATFORM) {
-            $platformId = 'ethereum';
-        }
-        $baseUrl .= $platformId . "/contract/" . $token['address'];
-        $response = Request::get($baseUrl)->expectsJson()->send();
-        if ($response->hasBody()) {
-            return Arrays::arrayFrom($response->body);
-        }
-
-        return [];
-    }
 }

@@ -17,26 +17,6 @@ abstract class ICoin
     const ACCOUNT_STORE_PATH = BASE_PATH . "/account_store/";
 
 
-    public static $explorerERC20Link = [
-        'main' => [
-            "transaction" => "https://etherscan.io/tx/",
-            "address" => "https://etherscan.io/address/"
-        ],
-        'test' => [
-            "transaction" => "https://ropsten.etherscan.io/tx/",
-            "address" => "https://ropsten.etherscan.io/address/"
-        ],
-    ];
-    public static $explorerTRC20Link = [
-        'main' => [
-            "transaction" => "https://tronscan.org/#/transaction/",
-            "address" => "https://tronscan.org/#/address/"
-        ],
-        'test' => [
-            "transaction" => "https://shasta.tronscan.org/#/transaction/",
-            "address" => "https://shasta.tronscan.org/#/address/"
-        ]
-    ];
     public static $explorerBEP20Link = [
         'main' => [
             "transaction" => "https://bscscan.com/tx/",
@@ -46,24 +26,6 @@ abstract class ICoin
             "transaction" => "https://testnet.bscscan.com/tx/",
             "address" => "https://testnet.bscscan.com/address/"
         ],
-
-    ];
-    public static $explorerPEP20Link = [
-        'main' => [
-            "transaction" => "https://polygonscan.com/tx/",
-            "address" => "https://polygonscan.com/address/"
-        ],
-        'test' => [
-            "transaction" => "https://mumbai.polygonscan.com/tx/",
-            "address" => "https://mumbai.polygonscan.com/address/"
-        ],
-
-    ];
-    public static $explorerKRC20Link = [
-        'main' => [
-            "transaction" => "https://bscscan.com/tx/",
-            "address" => "https://bscscan.com/address/"
-        ]
 
     ];
 
@@ -153,80 +115,6 @@ abstract class ICoin
             $coinAccount->ticker = $coinInfo->ticker;
             return $coinAccount;
 
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    public function generateAddress(Account $account)
-    {
-        try {
-            if (empty($account->id)) throw new Exception("Account id not found");
-            $coinInfo = $this->getCoinInfo();
-            if (!empty($this->__hostInstance->pass_phrase)) $this->__connector->walletpassphrase($this->__hostInstance->pass_phrase, 10);
-            $address = $this->__connector->getnewaddress($account->id);
-            if ($this->__connector->status != 200) throw new Exception($this->__connector->error, $this->__connector->status);
-            $coinAccount = new Account();
-            $coinAccount->id = $account->id;
-            $coinAccount->address = $address;
-            $coinAccount->server_ip = $this->__hostInstance->host;
-            $coinAccount->ticker = $coinInfo->ticker;
-            return $coinAccount;
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * @param array $param
-     * @return array
-     * @throws Exception
-     */
-    public function getTransactions($param = [])
-    {
-        try {
-            $coinInfo = $this->getCoinInfo();
-            $response = [];
-            foreach ($coinInfo->hosts as $host) {
-                $host = (object)$host;
-                $connector = new Connector($host->username, $host->password, $host->host, $host->port);
-                if (!empty($host->pass_phrase)) $connector->walletpassphrase($host->pass_phrase, 10);
-                if ($param['category'] == 'received') {
-                    $minconf = !empty($param['minconf']) ? $param['minconf'] : 0;
-                    $include_empty = !empty($param['include_empty']) ? $param['include_empty'] : false;
-                    $listTransaction = $connector->listreceivedbyaddress(intval($minconf), intval($include_empty));
-                } else if ($param['category'] == 'unspent') {
-                    $minconf = !empty($param['minconf']) ? $param['minconf'] : 0;
-                    $maxconf = !empty($param['maxconf']) ? $param['maxconf'] : 999999;
-                    $listTransaction = $connector->listunspent(intval($minconf), intval($maxconf));
-                } else {
-                    $limit = !empty($param['limit']) ? $param['limit'] : 100;
-                    $offset = !empty($param['offset']) ? $param['offset'] : 0;
-                    $listTransaction = $connector->listtransactions("*", intval($limit), intval($offset));
-                    $listTransaction = array_reverse($listTransaction);
-                }
-                if (!empty($connector->response['error'])) throw new Exception($connector->response['error']['message']);
-                else $response = array_merge($response, $listTransaction);
-            }
-            return $response;
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * @param Account $account
-     * @param array $param
-     * @return mixed
-     * @throws Exception
-     */
-    public function getTransactionsByAccount(Account $account, $param = [])
-    {
-        try {
-            if (!empty($this->__hostInstance->pass_phrase)) $this->__connector->walletpassphrase($this->__hostInstance->pass_phrase, 10);
-            $limit = !empty($param['limit']) ? $param['limit'] : 50;
-            $offset = !empty($param['offset']) ? $param['offset'] : 0;
-            return $this->__connector->listtransactions($account->id, $limit, $offset);
         } catch (Exception $e) {
             throw $e;
         }
